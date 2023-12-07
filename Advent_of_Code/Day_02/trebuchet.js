@@ -13,48 +13,45 @@ const rl = readline.createInterface({
    crlfDelay: Infinity, // To recognize all instances of CR LF ('\r\n') as a single line break
 });
 
-const createNumberArray = (singleLine) => {
-   return singleLine.filter((character) => !isNaN(character));
-};
-
-const createTwoDigitNumber = (arrayOfNumbers) => {
-   const twoDigit = [];
-
-   if (arrayOfNumbers.length >= 2) {
-      twoDigit.push(arrayOfNumbers[0]);
-      twoDigit.push(arrayOfNumbers[arrayOfNumbers.length - 1]);
-   }
-
-   if (arrayOfNumbers.length === 1) {
-      twoDigit.push(arrayOfNumbers[0]);
-      twoDigit.push(arrayOfNumbers[0]);
-   }
-
-   if (arrayOfNumbers.length === 0) {
-      twoDigit.push(0);
-   }
-
-   return twoDigit.join("");
-};
-
 let total = 0;
+const digitsInLetters = [
+   "one",
+   "two",
+   "three",
+   "four",
+   "five",
+   "six",
+   "seven",
+   "eight",
+   "nine",
+];
+
+const numbersWithPositions = [];
+
+const parseSingleLine = (singleLine) => {
+   const numbersArray = singleLine.split("");
+   console.log("numbersArray: ", numbersArray);
+
+   for (let i = 0; i < numbersArray.length; i++) {
+      if (!isNaN(numbersArray[i])) {
+         console.log("=> ", numbersArray[i]);
+         numbersWithPositions.push({
+            number: numbersArray[i],
+            position: i,
+         });
+      }
+   }
+};
 
 // Read the file line by line
 rl.on("line", (line) => {
-   // Process each line here
-   // console.log("Line:", line);
-   // const newLineArray = line.split("");
-   // console.log("newLineArray:", newLineArray);
-   const numbersArray = createNumberArray(line.split(""));
-   console.log(numbersArray);
-
-   const twoDigitNumber = createTwoDigitNumber(numbersArray);
-   console.log(twoDigitNumber);
-   total += parseInt(twoDigitNumber);
+   console.log("Line:", line);
+   parseSingleLine(line);
 });
 
 // Handle end of file
 rl.on("close", () => {
    console.log("total: ", total);
+   console.log("numbersWithPositions: ", numbersWithPositions);
    console.log("End of file");
 });
