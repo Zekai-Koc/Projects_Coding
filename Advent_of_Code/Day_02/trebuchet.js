@@ -1,3 +1,5 @@
+const { execSync } = require("child_process");
+
 const { subscribe } = require("diagnostics_channel");
 const fs = require("fs");
 const readline = require("readline");
@@ -61,9 +63,9 @@ const parseSingleLine = (singleLine) => {
          i++;
       } else {
          const tempSubStr = singleLine.substring(i, i + 5);
-         console.log(tempSubStr);
+         console.log("tempSubStr ", tempSubStr);
 
-         let fastForward = 0;
+         let fastForward = 1;
 
          if (tempSubStr.includes("one")) {
             newDigits.push(1);
@@ -77,8 +79,24 @@ const parseSingleLine = (singleLine) => {
             newDigits.push(6);
             fastForward = 3;
          }
+
+         if (tempSubStr.includes("four")) {
+            newDigits.push(6);
+            fastForward = 4;
+         }
+         if (tempSubStr.includes("five")) {
+            newDigits.push(6);
+            fastForward = 4;
+         }
+         if (tempSubStr.includes("nine")) {
+            newDigits.push(6);
+            fastForward = 4;
+         }
+
          i += fastForward;
       }
+      console.log(newDigits);
+      sleep(1000);
    }
    console.log(newDigits);
 };
@@ -134,3 +152,8 @@ rl.on("close", () => {
 //       }
 //    }
 // };
+
+const sleep = (millis) => {
+   var stop = new Date().getTime();
+   while (new Date().getTime() < stop + millis) {}
+};
