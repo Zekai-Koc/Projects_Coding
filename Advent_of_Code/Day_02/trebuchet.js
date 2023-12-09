@@ -81,18 +81,30 @@ const parseSingleLine = (singleLine) => {
          }
 
          if (tempSubStr.includes("four")) {
-            newDigits.push(6);
+            newDigits.push(4);
             fastForward = 4;
          }
          if (tempSubStr.includes("five")) {
-            newDigits.push(6);
+            newDigits.push(5);
             fastForward = 4;
          }
          if (tempSubStr.includes("nine")) {
-            newDigits.push(6);
+            newDigits.push(9);
             fastForward = 4;
          }
 
+         if (tempSubStr.includes("three")) {
+            newDigits.push(3);
+            fastForward = 5;
+         }
+         if (tempSubStr.includes("seven")) {
+            newDigits.push(7);
+            fastForward = 5;
+         }
+         if (tempSubStr.includes("eight")) {
+            newDigits.push(8);
+            fastForward = 5;
+         }
          i += fastForward;
       }
       console.log(newDigits);
