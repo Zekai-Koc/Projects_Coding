@@ -53,18 +53,52 @@ const numbersWithPositions = [];
 // console.log(newDigits);
 const parseSingleLine = (singleLine) => {
    console.log("singleLine:", singleLine);
-
+   // two1nine
+   const newDigits = [];
    for (let i = 0; i < singleLine.length; ) {
-      if (isNaN(singleLine[i])) {
-         const tempSubStr = singleLine.substring(i, 3);
+      if (!isNaN(singleLine[i])) {
+         newDigits.push(+singleLine[i]);
+         i++;
+      } else {
+         const tempSubStr = singleLine.substring(i, i + 5);
          console.log(tempSubStr);
-         if (tempSubStr.includes("one")) console.log(1);
-         if (tempSubStr.includes("two")) console.log(2);
-         if (tempSubStr.includes("six")) console.log(6);
+
+         let fastForward = 0;
+
+         if (tempSubStr.includes("one")) {
+            newDigits.push(1);
+            fastForward = 3;
+         }
+         if (tempSubStr.includes("two")) {
+            newDigits.push(2);
+            fastForward = 3;
+         }
+         if (tempSubStr.includes("six")) {
+            newDigits.push(6);
+            fastForward = 3;
+         }
+         i += fastForward;
       }
-      i++;
    }
+   console.log(newDigits);
 };
+
+// switch (tempSubStr) {
+//    case tempSubStr.includes("one"):
+//       newDigits.push(1);
+//       fastForward = 3;
+//       break;
+//    case tempSubStr.includes("two"):
+//       newDigits.push(1);
+//       fastForward = 3;
+//       break;
+//    case tempSubStr.includes("six"):
+//       newDigits.push(1);
+//       fastForward = 3;
+//       break;
+//    default:
+//       break;
+// }
 
 // Read the file line by line
 rl.on("line", (line) => {
