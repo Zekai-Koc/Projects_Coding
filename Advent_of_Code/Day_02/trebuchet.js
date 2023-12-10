@@ -1,4 +1,3 @@
-const { subscribe } = require("diagnostics_channel");
 const fs = require("fs");
 const readline = require("readline");
 
@@ -32,54 +31,38 @@ const createTwoDigitNumber = (arrayOfNumbers) => {
 
 const parseSingleLine = (singleLine) => {
    const newDigits = [];
+   const digitsInLetters = [
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+   ];
+
    for (let i = 0; i < singleLine.length; ) {
       if (!isNaN(singleLine[i])) {
          newDigits.push(+singleLine[i]);
          i++;
       } else {
-         const tempSubStr = singleLine.substring(i, i + 5);
-         // console.log("tempSubStr ", tempSubStr);
-         let fastForward = 1;
-         if (tempSubStr.includes("one")) {
-            newDigits.push(1);
-            fastForward = 3;
+         const tempSubStr = singleLine.substring(i);
+         // console.log("tempSubStr", tempSubStr);
+         let found = false;
+
+         for (const digit of digitsInLetters) {
+            if (tempSubStr.startsWith(digit)) {
+               newDigits.push(digitsInLetters.indexOf(digit) + 1);
+               found = true;
+               i += digit.length;
+            }
          }
-         if (tempSubStr.includes("two")) {
-            newDigits.push(2);
-            fastForward = 3;
-         }
-         if (tempSubStr.includes("six")) {
-            newDigits.push(6);
-            fastForward = 3;
-         }
-         if (tempSubStr.includes("four")) {
-            newDigits.push(4);
-            fastForward = 4;
-         }
-         if (tempSubStr.includes("five")) {
-            newDigits.push(5);
-            fastForward = 4;
-         }
-         if (tempSubStr.includes("nine")) {
-            newDigits.push(9);
-            fastForward = 4;
-         }
-         if (tempSubStr.includes("three")) {
-            newDigits.push(3);
-            fastForward = 5;
-         }
-         if (tempSubStr.includes("seven")) {
-            newDigits.push(7);
-            fastForward = 5;
-         }
-         if (tempSubStr.includes("eight")) {
-            newDigits.push(8);
-            fastForward = 5;
-         }
-         i += fastForward;
+         if (!found) i++;
       }
       // console.log(newDigits);
-      // sleep(100);
+      // sleep(1000);
    }
    // console.log(newDigits);
    return newDigits;
@@ -97,12 +80,8 @@ rl.on("line", (line) => {
    console.log(line, numArray, twoDigitNumber, total);
 });
 
-// Handle end of file
 rl.on("close", () => {
-   // console.log("total: ", total);
-   // console.log("numbersWithPositions: ", numbersWithPositions);
    console.log("total: ", total);
-
    console.log("End of file");
 });
 
@@ -110,18 +89,6 @@ const sleep = (millis) => {
    var stop = new Date().getTime();
    while (new Date().getTime() < stop + millis) {}
 };
-
-// const digitsInLetters = [
-//    "one",
-//    "two",
-//    "three",
-//    "four",
-//    "five",
-//    "six",
-//    "seven",
-//    "eight",
-//    "nine",
-// ];
 
 // const threeLetters = ["one", "two", "six"];
 // const fourLetters = ["four", "five", "nine"];
