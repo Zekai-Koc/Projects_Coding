@@ -10,5 +10,19 @@ function createMatrix(filePath) {
 }
 
 const matrix = createMatrix("example.txt");
-console.log(matrix);
-console.log(matrix[4][2]);
+
+const row = 4;
+const col = 3;
+
+console.log(matrix[row][col]);
+
+const checkLeft = (row, col) => {
+   return matrix[row][col - 1] !== ".";
+};
+
+const checkRight = (row, col) => {
+   return matrix[row][col + 1] !== ".";
+};
+
+console.log(checkLeft(row, col));
+console.log(checkRight(row, col));
