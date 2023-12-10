@@ -1,20 +1,14 @@
 const fs = require("fs");
-const readline = require("readline");
 
-const filePath = "example.txt";
-// const filePath = "input.txt";
+function createMatrix(filePath) {
+   const fileContent = fs.readFileSync(filePath, "utf-8");
+   const lines = fileContent.trim().split("\n");
 
-const fileStream = fs.createReadStream(filePath);
+   const matrix = lines.map((line) => line.trim().split(""));
 
-const rl = readline.createInterface({
-   input: fileStream,
-   crlfDelay: Infinity,
-});
+   return matrix;
+}
 
-rl.on("line", (line) => {
-   console.log(line);
-});
-
-rl.on("close", () => {
-   console.log("End of file");
-});
+const matrix = createMatrix("example.txt");
+console.log(matrix);
+console.log(matrix[4][2]);
