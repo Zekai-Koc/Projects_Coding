@@ -1,7 +1,8 @@
 const fs = require("fs");
 const readline = require("readline");
 
-const filePath = "example.txt";
+// const filePath = "example.txt";
+const filePath = "input.txt";
 
 const fileStream = fs.createReadStream(filePath);
 
@@ -11,12 +12,6 @@ const rl = readline.createInterface({
 });
 
 const gameStats = [];
-
-rl.on("line", (line) => {
-   const singleGameStats = handleSingleLine(line);
-   console.log(singleGameStats);
-   gameStats.push(singleGameStats);
-});
 
 const handleSingleLine = (singleLine) => {
    const [Red, Green, Blue] = [[], [], []];
@@ -39,13 +34,40 @@ const handleSingleLine = (singleLine) => {
          if (finalSeparation[1] === "blue") Blue.push(+finalSeparation[0]);
       });
    });
-   // console.log({ Red }, { Green }, { Blue });
-   // console.log(Math.max(...Red));
-   // console.log(Math.max(...Green));
-   // console.log(Math.max(...Blue));
-   gameStats.gameId = seperateGameId[0].trim();
+   const gameId = parseInt(seperateGameId[0].split(" ")[1].trim());
    gameStats.Red = Math.max(...Red);
    gameStats.Green = Math.max(...Green);
    gameStats.Blue = Math.max(...Blue);
-   return gameStats;
+
+   return { gameId, ...gameStats };
 };
+
+const findPossible = (games, maxColorCubes) => {
+   const filteredArray = games.filter(
+      (game) =>
+         game.Red <= maxColorCubes.red &&
+         game.Green <= maxColorCubes.green &&
+         game.Blue <= maxColorCubes.blue
+   );
+   return filteredArray;
+};
+
+const findTotal = (filteredArray) => {
+   return filteredArray.reduce((acc, curVal) => acc + curVal.gameId, 0);
+};
+
+rl.on("line", (line) => {
+   const singleGameStats = handleSingleLine(line);
+   gameStats.push(singleGameStats);
+});
+
+rl.on("close", () => {
+   console.log(gameStats);
+   const possibleArray = findPossible(gameStats, {
+      red: 12,
+      green: 13,
+      blue: 14,
+   });
+
+   console.log(findTotal(possibleArray));
+});
