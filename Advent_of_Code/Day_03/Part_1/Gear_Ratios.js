@@ -26,3 +26,11 @@ const checkRight = (row, col) => {
 
 console.log(checkLeft(row, col));
 console.log(checkRight(row, col));
+
+const readRow = (singleRow) => {
+   for (let i = 0; i < singleRow.length; i++) {
+      console.log(singleRow[i]);
+   }
+};
+
+readRow(matrix[0]);
