@@ -48,6 +48,56 @@ const checkBottom = (row, col) => {
    );
 };
 
+const checkTopLeft = (row, col) => {
+   if (row - 1 < 0) return false;
+   if (col - 1 < 0) return false;
+   return (
+      matrix[row - 1][col - 1] === undefined ||
+      (isNaN(matrix[row - 1][col - 1]) && matrix[row - 1][col - 1] !== ".")
+   );
+};
+
+const checkTopRight = (row, col) => {
+   if (row - 1 < 0) return false;
+   if (col + 1 > matrix[row].length) return false;
+   return (
+      matrix[row - 1][col + 1] === undefined ||
+      (isNaN(matrix[row - 1][col + 1]) && matrix[row - 1][col + 1] !== ".")
+   );
+};
+
+const checkBottomLeft = (row, col) => {
+   if (row + 1 > matrix.length) return false;
+   if (col - 1 < 0) return false;
+   return (
+      matrix[row + 1][col - 1] === undefined ||
+      (isNaN(matrix[row + 1][col - 1]) && matrix[row + 1][col - 1] !== ".")
+   );
+};
+
+const checkBottomRight = (row, col) => {
+   if (row + 1 > matrix.length) return false;
+   if (col + 1 > matrix[row].length) return false;
+   return (
+      matrix[row + 1][col + 1] === undefined ||
+      (isNaN(matrix[row + 1][col + 1]) && matrix[row + 1][col + 1] !== ".")
+   );
+};
+
+const checkAllSides = (row, col) => {
+   let result = false;
+
+   if (checkLeft(row, col)) result = true;
+   if (checkRight(row, col)) result = true;
+   if (checkTop(row, col)) result = true;
+   if (checkBottom(row, col)) result = true;
+   if (checkTopLeft(row, col)) result = true;
+   if (checkTopRight(row, col)) result = true;
+   if (checkBottomLeft(row, col)) result = true;
+   if (checkBottomRight(row, col)) result = true;
+
+   return result;
+};
 // console.log(checkLeft(row, col));
 // console.log(checkRight(row, col));
 
@@ -68,26 +118,10 @@ const readRow = (rowNum) => {
          console.log("colIndex: ", colIndex);
 
          colIndex.forEach((element) => {
-            // console.log(checkLeft(rowNum, element));
-            // console.log(
-            //    "checkRight: ",
-            //    matrix[rowNum][element],
-            //    checkRight(rowNum, element)
-            // );
-            // console.log(
-            //    "checkLeft: ",
-            //    matrix[rowNum][element],
-            //    checkLeft(rowNum, element)
-            // );
-            // console.log(
-            //    "checkTop: ",
-            //    matrix[rowNum][element],
-            //    checkTop(rowNum, element)
-            // );
             console.log(
-               "checkBottom: ",
+               "checkAllSides: ",
                matrix[rowNum][element],
-               checkBottom(rowNum, element)
+               checkAllSides(rowNum, element)
             );
          });
       }
@@ -95,3 +129,40 @@ const readRow = (rowNum) => {
 };
 
 readRow(2);
+
+// console.log(checkLeft(rowNum, element));
+// console.log(
+//    "checkRight: ",
+//    matrix[rowNum][element],
+//    checkRight(rowNum, element)
+// );
+// console.log(
+//    "checkLeft: ",
+//    matrix[rowNum][element],
+//    checkLeft(rowNum, element)
+// );
+// console.log(
+//    "checkTop: ",
+//    matrix[rowNum][element],
+//    checkTop(rowNum, element)
+// );
+// console.log(
+//    "checkBottom: ",
+//    matrix[rowNum][element],
+//    checkBottom(rowNum, element)
+// );
+// console.log(
+//    "checkTopLeft: ",
+//    matrix[rowNum][element],
+//    checkTopLeft(rowNum, element)
+// );
+// console.log(
+//    "checkTopRight: ",
+//    matrix[rowNum][element],
+//    checkTopRight(rowNum, element)
+// );
+// console.log(
+//    "checkBottomRight: ",
+//    matrix[rowNum][element],
+//    checkBottomRight(rowNum, element)
+// );
