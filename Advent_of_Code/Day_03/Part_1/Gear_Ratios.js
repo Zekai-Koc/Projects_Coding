@@ -11,9 +11,6 @@ function createMatrix(filePath) {
 
 const matrix = createMatrix("example.txt");
 
-const row = 4;
-const col = 3;
-
 const checkLeft = (row, col) => {
    // return matrix[row][col - 1] !== undefined || isNaN(matrix[row][col - 1]);
    if (col - 1 < 0) return false;
@@ -101,6 +98,7 @@ const checkAllSides = (row, col) => {
 // console.log(checkLeft(row, col));
 // console.log(checkRight(row, col));
 
+const partNumber = [];
 const readRow = (rowNum) => {
    console.log(matrix[rowNum]);
    for (let i = 0; i < matrix[rowNum].length; i++) {
@@ -113,22 +111,26 @@ const readRow = (rowNum) => {
          i++;
       }
 
+      let tempPartNumber = false;
       if (colIndex.length > 0) {
          console.log("number: ", number);
          console.log("colIndex: ", colIndex);
-
          colIndex.forEach((element) => {
             console.log(
                "checkAllSides: ",
                matrix[rowNum][element],
                checkAllSides(rowNum, element)
             );
+            tempPartNumber = tempPartNumber || checkAllSides(rowNum, element);
          });
+
+         if (tempPartNumber) partNumber.push(number);
       }
    }
 };
 
-readRow(2);
+readRow(0);
+console.log(partNumber);
 
 // console.log(checkLeft(rowNum, element));
 // console.log(
