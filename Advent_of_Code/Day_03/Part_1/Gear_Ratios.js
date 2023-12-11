@@ -14,10 +14,9 @@ const matrix = createMatrix("example.txt");
 const row = 4;
 const col = 3;
 
-// console.log(matrix[row][col]);
-
 const checkLeft = (row, col) => {
    // return matrix[row][col - 1] !== undefined || isNaN(matrix[row][col - 1]);
+   if (col - 1 < 0) return false;
    return (
       matrix[row][col - 1] === undefined ||
       (isNaN(matrix[row][col - 1]) && matrix[row][col - 1] !== ".")
@@ -26,9 +25,26 @@ const checkLeft = (row, col) => {
 
 const checkRight = (row, col) => {
    // return matrix[row][col + 1] !== ".";
+   if (col + 1 > matrix[row].length) return false;
    return (
       matrix[row][col + 1] === undefined ||
       (isNaN(matrix[row][col + 1]) && matrix[row][col + 1] !== ".")
+   );
+};
+
+const checkTop = (row, col) => {
+   if (row - 1 < 0) return false;
+   return (
+      matrix[row - 1][col] === undefined ||
+      (isNaN(matrix[row - 1][col]) && matrix[row - 1][col] !== ".")
+   );
+};
+
+const checkBottom = (row, col) => {
+   if (row + 1 > matrix.length) return false;
+   return (
+      matrix[row + 1][col] === undefined ||
+      (isNaN(matrix[row + 1][col]) && matrix[row + 1][col] !== ".")
    );
 };
 
@@ -53,19 +69,29 @@ const readRow = (rowNum) => {
 
          colIndex.forEach((element) => {
             // console.log(checkLeft(rowNum, element));
+            // console.log(
+            //    "checkRight: ",
+            //    matrix[rowNum][element],
+            //    checkRight(rowNum, element)
+            // );
+            // console.log(
+            //    "checkLeft: ",
+            //    matrix[rowNum][element],
+            //    checkLeft(rowNum, element)
+            // );
+            // console.log(
+            //    "checkTop: ",
+            //    matrix[rowNum][element],
+            //    checkTop(rowNum, element)
+            // );
             console.log(
-               "checkRight: ",
+               "checkBottom: ",
                matrix[rowNum][element],
-               checkRight(rowNum, element)
-            );
-            console.log(
-               "checkLeft: ",
-               matrix[rowNum][element],
-               checkLeft(rowNum, element)
+               checkBottom(rowNum, element)
             );
          });
       }
    }
 };
 
-readRow(0);
+readRow(2);
