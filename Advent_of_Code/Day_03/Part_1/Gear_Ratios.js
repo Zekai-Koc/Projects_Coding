@@ -9,10 +9,9 @@ function createMatrix(filePath) {
    return matrix;
 }
 
-const matrix = createMatrix("example.txt");
+const matrix = createMatrix("input.txt");
 
 const checkLeft = (row, col) => {
-   // return matrix[row][col - 1] !== undefined || isNaN(matrix[row][col - 1]);
    if (col - 1 < 0) return false;
    return (
       matrix[row][col - 1] === undefined ||
@@ -38,7 +37,7 @@ const checkTop = (row, col) => {
 };
 
 const checkBottom = (row, col) => {
-   if (row + 1 > matrix.length) return false;
+   if (row + 1 > matrix.length - 1) return false;
    return (
       matrix[row + 1][col] === undefined ||
       (isNaN(matrix[row + 1][col]) && matrix[row + 1][col] !== ".")
@@ -64,7 +63,7 @@ const checkTopRight = (row, col) => {
 };
 
 const checkBottomLeft = (row, col) => {
-   if (row + 1 > matrix.length) return false;
+   if (row + 1 > matrix.length - 1) return false;
    if (col - 1 < 0) return false;
    return (
       matrix[row + 1][col - 1] === undefined ||
@@ -73,7 +72,7 @@ const checkBottomLeft = (row, col) => {
 };
 
 const checkBottomRight = (row, col) => {
-   if (row + 1 > matrix.length) return false;
+   if (row + 1 > matrix.length - 1) return false;
    if (col + 1 > matrix[row].length) return false;
    return (
       matrix[row + 1][col + 1] === undefined ||
@@ -95,14 +94,11 @@ const checkAllSides = (row, col) => {
 
    return result;
 };
-// console.log(checkLeft(row, col));
-// console.log(checkRight(row, col));
 
 const partNumber = [];
 const readRow = (rowNum) => {
-   console.log(matrix[rowNum]);
+   // console.log(matrix[rowNum]);
    for (let i = 0; i < matrix[rowNum].length; i++) {
-      // console.log("=> ", singleRow[i]);
       let number = "";
       let colIndex = [];
       while (!isNaN(matrix[rowNum][i])) {
@@ -113,24 +109,21 @@ const readRow = (rowNum) => {
 
       let tempPartNumber = false;
       if (colIndex.length > 0) {
-         console.log("number: ", number);
-         console.log("colIndex: ", colIndex);
          colIndex.forEach((element) => {
-            console.log(
-               "checkAllSides: ",
-               matrix[rowNum][element],
-               checkAllSides(rowNum, element)
-            );
             tempPartNumber = tempPartNumber || checkAllSides(rowNum, element);
          });
 
-         if (tempPartNumber) partNumber.push(number);
+         if (tempPartNumber) partNumber.push(+number);
       }
    }
 };
 
-readRow(0);
-console.log(partNumber);
+for (let index = 0; index < matrix.length; index++) {
+   readRow(index);
+   console.log(partNumber);
+}
+
+console.log(partNumber.reduce((acc, curVal) => acc + curVal, 0));
 
 // console.log(checkLeft(rowNum, element));
 // console.log(
