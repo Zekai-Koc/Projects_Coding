@@ -1,5 +1,6 @@
 function DNAtoRNA(dna) {
-   console.log(dna);
+   return dna.replaceAll("T", "U");
 }
 
-DNAtoRNA("GCAT");
+console.log(DNAtoRNA("GCAT"));
+console.log(DNAtoRNA("TTTT"));
